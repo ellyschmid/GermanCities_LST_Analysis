@@ -10,3 +10,4 @@ Google Earth Engine LST, NDVI, Landcover and Population Analysis of Biggest Citi
 * zensus2022_100m: population grid of germany based on the zensus 2022 in 100 m resolution
 * additionally, the "Urban Green Raster Germany 2018" was used for Lancover Information. Available: https://zenodo.org/records/5842521
 ## Scripts: 
+* Zensus_Cities: Filters first the Bevölkerungstabelle for Germany for cities with a Population above 50.000 inhabitants. The VG250_GEM Shapefile based on the selected cities from the "Bevölkerungstabelle". 
