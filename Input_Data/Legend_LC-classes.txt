@@ -1,0 +1,15 @@
+Land cover classes
+
+Code	Land cover
+1	Built-up
+2	open soil
+3	Deciduous wood
+4	Coniferous wood
+5	Ackerland
+6	Arable land (low seasonal vegetation)
+7	Water
+8	Built-up with significant green share
+
+Topicality: 2021/04/21
+
+
