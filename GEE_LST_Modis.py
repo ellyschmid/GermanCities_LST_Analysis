@@ -13,25 +13,22 @@ shapefile_path = "projects/braided-gist-417812/assets/filtered_cities"  # Replac
 zensus_path = "projects/braided-gist-417812/assets/zensus2022_1km"
 landcover_path = "projects/braided-gist-417812/assets/ugr2018_germany"
 
+# selected period 
 start_year = 2014
 end_year = 2024
 
 # Load datasets
 cities = ee.FeatureCollection(shapefile_path)
-#city_list = ee.List(cities.toList(100))  # Convert to list (adjust number if needed)
+#city_list = ee.List(cities.toList(100))  # Convert to list (adjust number if needed) # only for testing 
 #test_city = ee.FeatureCollection([city_list.get(0), city_list.get(1)], city_list.get(2))  # Select cities by index
 
+# load datasets
 zensus = ee.Image(zensus_path)
 landcover = ee.Image(landcover_path)
 
 # Get CRS & scale from census data
 zensus_proj = zensus.projection()
 zensus_scale = zensus_proj.nominalScale()
-
-# Ensure landcover is in the same projection as Census
-city_bounds = cities.geometry().bounds()
-landcover_clipped = landcover.clip(city_bounds)
-landcover = landcover.reproject(crs=zensus_proj, scale=zensus_scale)
 
 # ----------------------------
 # 2. CREATE BUFFER & REMOVE OVERLAP
@@ -58,13 +55,18 @@ merged_buffers = buffered_cities.union().geometry()
 # Ensure no overlapping pixels: Remove the original city areas from the buffers
 buffer_only = merged_buffers.difference(cities.geometry())
 
+# Ensure landcover is in the same projection as Census
+city_bounds = buffered_cities.geometry().bounds()
+landcover_clipped = landcover.clip(city_bounds)
+landcover = landcover.reproject(crs=zensus_proj, scale=zensus_scale)
+
 
 # ----------------------------
 # 3. FUNCTIONS FOR PROCESSING
 # ----------------------------
 # change month and day as needed
 def get_summer_lst(year):
-    start_date, end_date = f"{year}-06-01", f"{year}-08-31"
+    start_date, end_date = f"{year}-06-01", f"{year}-08-31"               # change day and month if needed
     lst_collection = (ee.ImageCollection("MODIS/061/MOD11A2")
                       .filterDate(start_date, end_date)
                       .select("LST_Day_1km")
@@ -73,7 +75,7 @@ def get_summer_lst(year):
 
 
 def get_summer_ndvi(year):
-    start_date, end_date = f"{year}-06-01", f"{year}-08-31"
+    start_date, end_date = f"{year}-06-01", f"{year}-08-31"                # change day and month if needed
     def compute_ndvi(img):
         red, nir = img.select("Nadir_Reflectance_Band1"), img.select("Nadir_Reflectance_Band2")
         return img.addBands(nir.subtract(red).divide(nir.add(red)).rename("NDVI")).select("NDVI")
