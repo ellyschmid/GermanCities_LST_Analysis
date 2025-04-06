@@ -3,8 +3,8 @@ import os
 import glob
 
 # Set the folder where your CSVs are stored (after download)
-csv_folder = r"C:\Users\ellys\Downloads\Per_City_CSVs"  # actual file path
-output_path = r"C:\Users\ellys\Downloads\Per_City_CSVs\LST_NDVI_Landcover_Modis.csv"
+csv_folder = r"\Per_City_CSVs"  # actual file path of folder containing all CSVs
+output_path = r"\LST_NDVI_Landcover_Modis.csv"
 
 # Get all CSV files in the folder
 all_csv_files = glob.glob(os.path.join(csv_folder, "*.csv"))
