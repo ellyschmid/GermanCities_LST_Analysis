@@ -13,7 +13,7 @@ shapefile_path = "projects/braided-gist-417812/assets/filtered_cities"  # Replac
 zensus_path = "projects/braided-gist-417812/assets/zensus2022_1km"
 landcover_path = "projects/braided-gist-417812/assets/ugr2018_germany"
 
-# selected period 
+# select period  
 start_year = 2014
 end_year = 2024
 
